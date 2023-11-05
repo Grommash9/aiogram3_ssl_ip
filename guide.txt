@@ -1,0 +1,66 @@
+https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-20-04-1
+
+sudo apt-get update
+sudo apt-get install nginx openssl -y
+
+ASDASd£!RR3rEWF132e!£"E!£r13$325£$RF
+
+
+sudo openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj "/C=US/ST=New York/L=New York City/O=Bouncy Castles, Inc./OU=Ministry of Water Slides/CN=138.68.65.3/emailAddress=admin@your_domain.com"
+
+sudo openssl dhparam -out /etc/nginx/dhparam.pem 4096
+
+
+sudo nano /etc/nginx/snippets/self-signed.conf
+
+	ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+	ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key
+
+
+sudo nano /etc/nginx/snippets/ssl-params.conf
+
+	ssl_protocols TLSv1.3;
+	ssl_prefer_server_ciphers on;
+	ssl_dhparam /etc/nginx/dhparam.pem; 
+	ssl_ciphers EECDH+AESGCM:EDH+AESGCM;
+	ssl_ecdh_curve secp384r1;
+	ssl_session_timeout  10m;
+	ssl_session_cache shared:SSL:10m;
+	ssl_session_tickets off;
+	ssl_stapling on;
+	ssl_stapling_verify on;
+	resolver 8.8.8.8 8.8.4.4 valid=300s;
+	resolver_timeout 5s;
+	# Disable strict transport security for now. You can uncomment the following
+	# line if you understand the implications.
+	#add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload";
+	add_header X-Frame-Options DENY;
+	add_header X-Content-Type-Options nosniff;
+	add_header X-XSS-Protection "1; mode=block";
+
+sudo nano /etc/nginx/sites-available/default
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    include snippets/self-signed.conf;
+    include snippets/ssl-params.conf;
+
+root /var/www/138.68.65.3/html;
+        index index.html index.htm index.nginx-debian.html;
+
+  server_name 138.68.65.3 www.138.68.65.3;
+
+  location / {
+                try_files $uri $uri/ =404;
+        }
+}
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name 138.68.65.3 www.138.68.65.3;
+
+    return 302 https://$server_name$request_uri;
+}
+
