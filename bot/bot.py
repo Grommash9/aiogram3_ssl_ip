@@ -22,7 +22,7 @@ WEB_SERVER_HOST = "192.168.1.10"
 WEB_SERVER_PORT = 2005
 
 WEBHOOK_SECRET = "my-secret"
-BASE_WEBHOOK_URL = "https://134.209.238.251"
+BASE_WEBHOOK_URL = "https://165.227.140.207"
 
 WEBHOOK_SSL_CERT = "/nginx-certs/nginx-selfsigned.crt"
 WEBHOOK_SSL_PRIV = "/nginx-certs/nginx-selfsigned.key"

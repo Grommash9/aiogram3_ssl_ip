@@ -1,9 +1,6 @@
 # Use the official Python image with Python 3.11
 FROM python:3.10
 
-# Set the server IP address as a build argument (default to 138.68.65.3)
-ARG SERVER_IP=134.209.238.251
-
 # Create a directory for your application
 WORKDIR /home
 
