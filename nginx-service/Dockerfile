@@ -1,5 +1,5 @@
 # Use the official Nginx image as the base image
-FROM nginx:latest
+FROM nginx:1.24
 
 ARG SERVER_IP=159.89.104.29
 
