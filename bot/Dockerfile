@@ -4,6 +4,10 @@ FROM python:3.10
 # Create a directory for your application
 WORKDIR /home
 
+ENV BOT_TOKEN=$BOT_TOKEN
+ENV SERVER_IP=$SERVER_IP_ADDRESS
+
+
 # Copy your Pipfile and Pipfile.lock to the container
 COPY . /home/
 

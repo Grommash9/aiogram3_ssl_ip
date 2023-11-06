@@ -9,6 +9,10 @@ services:
         ipv4_address: 192.168.1.10
     depends_on:
       - nginx-service
+      - redis
+      - mysql-server
+    env_file:
+      - .env
     volumes:
       - nginx-certs:/nginx-certs
     ports:
@@ -17,6 +21,8 @@ services:
     build:
       context: ./nginx-service
       dockerfile: Dockerfile
+    environment:
+      SERVER_IP_ADDRESS: ${SERVER_IP_ADDRESS}
     ports:
       - "443:443"
     volumes:
@@ -27,6 +33,31 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:443"]
       interval: 5s
+      timeout: 10s
+      retries: 3
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      my_network:
+        ipv4_address: 192.168.1.30
+  mysql-server:
+    build:
+      context: ./mysql
+      dockerfile: Dockerfile
+    ports:
+      - "3306:3306"
+    environment:
+      REMOTE_USER_NAME: ${REMOTE_USER_NAME}
+      MYSQL_ALLOW_EMPTY_PASSWORD: ${MYSQL_ALLOW_EMPTY_PASSWORD}
+      ROOT_PASSWORD: ${ROOT_PASSWORD}
+    networks:
+      my_network:
+        ipv4_address: 192.168.1.40
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-uroot", "-proot"]
+      interval: 30s
       timeout: 10s
       retries: 3
 

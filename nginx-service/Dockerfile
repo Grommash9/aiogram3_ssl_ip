@@ -1,7 +1,7 @@
 # Use the official Nginx image as the base image
 FROM nginx:1.24
 
-ARG SERVER_IP=138.68.74.172
+ENV SERVER_IP=$SERVER_IP_ADDRESS
 
 RUN apt-get update && apt-get install -y nginx openssl
 
@@ -15,6 +15,8 @@ COPY . /home/
 
 RUN touch /etc/nginx/snippets/self-signed.conf
 RUN touch /etc/nginx/snippets/ssl-params.conf
+RUN sed -i "s/SERVER_IP_PLACEHOLDER/$SERVER_IP/g" /home/default.conf
+
 RUN cat home/self-signed.conf > /etc/nginx/snippets/self-signed.conf
 RUN cat home/ssl-params.conf > /etc/nginx/snippets/ssl-params.conf
 RUN cat home/default.conf > /etc/nginx/conf.d/my-custom-server.conf
