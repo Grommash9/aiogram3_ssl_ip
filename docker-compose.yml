@@ -8,6 +8,8 @@ services:
       - my_network
     depends_on:
       - nginx-service
+    volumes:
+      - nginx-certs:/nginx-certs
   nginx-service:
     build:
       context: ./nginx-service
