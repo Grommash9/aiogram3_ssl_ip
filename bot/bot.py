@@ -14,7 +14,7 @@ from aiogram.filters import CommandStart
 from aiogram.types import FSInputFile, Message
 from aiogram.utils.markdown import hbold
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
-
+from aiohttp.web_request import Request
 
 TOKEN = "6764040090:AAFKPxX9iqeQlT9gWy-jFxRSb5IIB_2gWYk"
 
@@ -22,12 +22,17 @@ WEB_SERVER_HOST = "192.168.1.10"
 WEB_SERVER_PORT = 2005
 
 WEBHOOK_SECRET = "my-secret"
-BASE_WEBHOOK_URL = "https://138.68.74.172"
+BASE_WEBHOOK_URL = "https://138.68.74.172/bot"
 
 WEBHOOK_SSL_CERT = "/nginx-certs/nginx-selfsigned.crt"
 WEBHOOK_SSL_PRIV = "/nginx-certs/nginx-selfsigned.key"
 router = Router()
+web_routes = web.RouteTableDef()
 
+@web_routes.get(f"/get")
+async def get_200(request: Request):
+    return web.json_response(
+        {"error": "bot get"}, status=200)
 
 @router.message(CommandStart())
 async def command_start_handler(message: Message) -> None:
@@ -65,6 +70,7 @@ def main() -> None:
     webhook_requests_handler.register(app, path="")
 
     setup_application(app, dp, bot=bot)
+    app.add_routes(web_routes)
     web.run_app(app, host=WEB_SERVER_HOST, port=WEB_SERVER_PORT)
 
 
