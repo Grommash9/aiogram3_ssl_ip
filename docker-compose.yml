@@ -10,6 +10,8 @@ services:
       - nginx-service
     volumes:
       - nginx-certs:/nginx-certs
+    ports:
+      - "2005:2005"
   nginx-service:
     build:
       context: ./nginx-service
@@ -20,6 +22,11 @@ services:
       - nginx-certs:/nginx-certs
     networks:
       - my_network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:80"]
+      interval: 5s
+      timeout: 10s
+      retries: 3
 
 networks:
   my_network:
