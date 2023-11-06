@@ -9,26 +9,13 @@ RUN apt-get update && apt-get install -y nginx openssl
 RUN mkdir -p /etc/nginx/snippets /etc/ssl/private
 
 # Generate self-signed SSL certificate and other configurations
-RUN openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out>    && openssl dhparam -out /etc/nginx/dhparam.pem 2048 \
-    && rm -rf /etc/nginx/conf.d/default.conf
+RUN openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj "/C=US/ST=New York/L=New York City/O=Bouncy Castles, Inc./OU=Ministry of Water Slides/CN=${SERVER_IP}/emailAddress=admin@your_domain.com" && openssl dhparam -out /etc/nginx/dhparam.pem 2048 && rm -rf /etc/nginx/conf.d/default.conf
 
-# Create the SSL configuration files
-RUN echo "ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;\nssl_certificate_key /etc/ssl/private/nginx>    && echo "ssl_protocols TLSv1.3;\nssl_prefer_server_ciphers on;\nssl_dhparam /etc/nginx/dhparam.pem;\ns>
-# Add your custom Nginx server configuration
-RUN echo "server {" > /etc/nginx/conf.d/my-custom-server.conf \
-    && echo "    listen 443 ssl;" >> /etc/nginx/conf.d/my-custom-server.conf \
-    && echo "    listen [::]:443 ssl;" >> /etc/nginx/conf.d/my-custom-server.conf \
-    && echo "    include snippets/self-signed.conf;" >> /etc/nginx/conf.d/my-custom-server.conf \
-    && echo "    include snippets/ssl-params.conf;" >> /etc/nginx/conf.d/my-custom-server.conf \
-    && echo "    root /usr/share/nginx/html;" >> /etc/nginx/conf.d/my-custom-server.conf \
-    && echo "    index index.html index.htm index.nginx-debian.html;" >> /etc/nginx/conf.d/my-custom-serve>    && echo "    server_name ${SERVER_IP} www.${SERVER_IP};" >> /etc/nginx/conf.d/my-custom-server.conf \
-    && echo "    location / {" >> /etc/nginx/conf.d/my-custom-server.conf \
-    && echo "        try_files \$uri \$uri/ =404;" >> /etc/nginx/conf.d/my-custom-server.conf \
-    && echo "    }" >> /etc/nginx/conf.d/my-custom-server.conf \
-    && echo "}" >> /etc/nginx/conf.d/my-custom-server.conf
+COPY . /home/
 
-# Copy your HTML files to the Nginx web root directory
-COPY ./html /usr/share/nginx/html
+RUN touch /etc/nginx/dhparam.pem
+RUN cat home/dhparam.pem > /etc/nginx/dhparam.pem
+RUN cat home/default.conf > /etc/nginx/conf.d/default
 
 # Set the command or entry point
 CMD ["nginx", "-g", "daemon off;"]
