@@ -17,16 +17,17 @@ services:
       context: ./nginx-service
       dockerfile: Dockerfile
     ports:
-      - "443:443"  # Map port 2001 on your host to port 80 in the container
+      - "443:443"
     volumes:
       - nginx-certs:/nginx-certs
     networks:
       - my_network
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:80"]
+      test: ["CMD-SHELL", "curl -f http://localhost:443"]
       interval: 5s
       timeout: 10s
       retries: 3
+
 
 networks:
   my_network:
