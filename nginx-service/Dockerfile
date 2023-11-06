@@ -15,7 +15,7 @@ COPY . /home/
 
 RUN touch /etc/nginx/dhparam.pem
 RUN cat home/dhparam.pem > /etc/nginx/dhparam.pem
-RUN cat home/default.conf > /etc/nginx/conf.d/default
+RUN cat home/default.conf > /etc/nginx/conf.d/my-custom-server.conf
 
 # Set the command or entry point
 CMD ["nginx", "-g", "daemon off;"]
