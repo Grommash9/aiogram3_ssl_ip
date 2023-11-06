@@ -2,7 +2,7 @@
 FROM python:3.10
 
 # Set the server IP address as a build argument (default to 138.68.65.3)
-ARG SERVER_IP=159.89.104.29
+ARG SERVER_IP=134.209.238.251
 
 # Create a directory for your application
 WORKDIR /home
