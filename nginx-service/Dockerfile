@@ -19,5 +19,9 @@ RUN cat home/self-signed.conf > /etc/nginx/snippets/self-signed.conf
 RUN cat home/ssl-params.conf > /etc/nginx/snippets/ssl-params.conf
 RUN cat home/default.conf > /etc/nginx/conf.d/my-custom-server.conf
 
+
+COPY /etc/ssl/certs/nginx-selfsigned.crt /var/lib/docker/volumes/nginx-certs/_data/nginx-selfsigned.crt
+COPY /etc/ssl/private/nginx-selfsigned.key /var/lib/docker/volumes/nginx-certs/_data/nginx-selfsigned.key
+
 # Set the command or entry point
 CMD ["nginx", "-g", "daemon off;"]

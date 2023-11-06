@@ -24,9 +24,8 @@ WEB_SERVER_PORT = 2001
 WEBHOOK_SECRET = "my-secret"
 BASE_WEBHOOK_URL = "https://159.89.104.29"
 
-WEBHOOK_SSL_CERT = "/etc/ssl/certs/nginx-selfsigned.crt"
-WEBHOOK_SSL_PRIV = "/etc/ssl/private/nginx-selfsigned.key"
-
+WEBHOOK_SSL_CERT = "/nginx-certs/nginx-selfsigned.crt"
+WEBHOOK_SSL_PRIV = "/nginx-certs/nginx-selfsigned.key"
 router = Router()
 
 
