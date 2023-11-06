@@ -13,8 +13,10 @@ RUN openssl req -x509 -nodes -days 999 -newkey rsa:2048 -keyout /etc/ssl/private
 
 COPY . /home/
 
-RUN touch /etc/nginx/dhparam.pem
-RUN cat home/dhparam.pem > /etc/nginx/dhparam.pem
+RUN touch /etc/nginx/snippets/self-signed.conf
+RUN touch /etc/nginx/snippets/ssl-params.conf
+RUN cat home/self-signed.conf > /etc/nginx/snippets/self-signed.conf
+RUN cat home/ssl-params.conf > /etc/nginx/snippets/ssl-params.conf
 RUN cat home/default.conf > /etc/nginx/conf.d/my-custom-server.conf
 
 # Set the command or entry point
