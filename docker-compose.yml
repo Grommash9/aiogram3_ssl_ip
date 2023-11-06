@@ -5,7 +5,8 @@ services:
       context: ./bot
       dockerfile: Dockerfile
     networks:
-      - my_network
+      my_network:
+        ipv4_address: 192.168.1.10
     depends_on:
       - nginx-service
     volumes:
@@ -21,7 +22,8 @@ services:
     volumes:
       - nginx-certs:/nginx-certs
     networks:
-      - my_network
+      my_network:
+        ipv4_address: 192.168.1.20
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:443"]
       interval: 5s
@@ -31,6 +33,11 @@ services:
 
 networks:
   my_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.1.0/24
 
 volumes:
   nginx-certs:
