@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+  bot:
+    build:
+      context: ./bot
+      dockerfile: Dockerfile
+    networks:
+      - my_network
+  nginx-service:
+    build:
+      context: ./nginx-service
+      dockerfile: Dockerfile
+    ports:
+      - "2001:80"  # Map port 2001 on your host to port 80 in the container
+    volumes:
+      - ./nginx-service:/usr/share/nginx/html  # Mount the HTML files
+    networks:
+      - my_network
+
+networks:
+  my_network:
