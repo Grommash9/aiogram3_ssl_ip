@@ -19,7 +19,7 @@ from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_applicati
 TOKEN = "6764040090:AAFKPxX9iqeQlT9gWy-jFxRSb5IIB_2gWYk"
 
 WEB_SERVER_HOST = "127.0.0.1"
-WEB_SERVER_PORT = 2001
+WEB_SERVER_PORT = 2005
 
 WEBHOOK_SECRET = "my-secret"
 BASE_WEBHOOK_URL = "https://159.89.104.29"

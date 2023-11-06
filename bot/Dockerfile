@@ -5,10 +5,10 @@ FROM python:3.10
 ARG SERVER_IP=159.89.104.29
 
 # Create a directory for your application
-WORKDIR /app
+WORKDIR /home
 
 # Copy your Pipfile and Pipfile.lock to the container
-COPY Pipfile Pipfile.lock /app/
+COPY . /home/
 
 # Install pipenv
 RUN pip install pipenv
@@ -16,13 +16,8 @@ RUN pip install pipenv
 # Install the dependencies using pipenv
 RUN pipenv install --ignore-pipfile
 
-# Copy your bot script to the container
-COPY bot.py /app/
-
 # Expose the Nginx port
-EXPOSE 80
-EXPOSE 443
-EXPOSE 2001
+EXPOSE 2005
 
 # Start your Telegram bot using pipenv
-CMD pipenv run python bot.py
+CMD pipenv run python kal.py
