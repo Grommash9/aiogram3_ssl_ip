@@ -6,6 +6,8 @@ services:
       dockerfile: Dockerfile
     networks:
       - my_network
+    depends_on:
+      - nginx-service
   nginx-service:
     build:
       context: ./nginx-service
