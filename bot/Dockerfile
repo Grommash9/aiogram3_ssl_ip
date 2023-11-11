@@ -1,6 +1,6 @@
 # Use the official Python image with Python 3.11
 FROM python:3.10
-
+LABEL version="1.0"
 # Create a directory for your application
 WORKDIR /home
 
