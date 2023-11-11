@@ -20,7 +20,7 @@ MYSQL = {
     "user": "rootremote",
     "password": getenv("ROOT_PASSWORD"),
     "db": "support_bot_database",
-    "port": "3306",
+    "port": 3306,
 }
 
 async def create_con():
