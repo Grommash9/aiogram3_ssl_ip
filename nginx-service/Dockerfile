@@ -1,7 +1,8 @@
 # Use the official Nginx image as the base image
 FROM nginx:1.24
 
-ENV SERVER_IP_ADDRESS=$SERVER_IP_ADDRESS
+ARG SERVER_IP_ADDRESS
+RUN echo "SERVER_IP_ADDRESS: $SERVER_IP_ADDRESS"
 
 RUN apt-get update && apt-get install -y nginx openssl
 
@@ -9,7 +10,7 @@ RUN apt-get update && apt-get install -y nginx openssl
 RUN mkdir -p /etc/nginx/snippets /etc/ssl/private
 
 # Generate self-signed SSL certificate and other configurations
-RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj "/C=US/ST=New York/L=New York/O=Bouncy Castles, Inc./OU=Ministry of Water/CN=${SERVER_IP}/emailAddress=admin@your_domain.com" && openssl dhparam -out /etc/nginx/dhparam.pem 2048 && rm -rf /etc/nginx/conf.d/default.conf
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj "/C=US/ST=New York/L=New York/O=Bouncy Castles, Inc./OU=Ministry of Water/CN=${SERVER_IP_ADDRESS}/emailAddress=admin@your_domain.com" && openssl dhparam -out /etc/nginx/dhparam.pem 2048 && rm -rf /etc/nginx/conf.d/default.conf
 
 COPY . /home/
 

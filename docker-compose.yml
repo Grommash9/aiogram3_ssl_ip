@@ -20,8 +20,8 @@ services:
     build:
       context: ./nginx-service
       dockerfile: Dockerfile
-    environment:
-      SERVER_IP_ADDRESS: ${SERVER_IP_ADDRESS}
+      args:
+        SERVER_IP_ADDRESS: ${SERVER_IP_ADDRESS}
     ports:
       - "443:443"
     volumes:
