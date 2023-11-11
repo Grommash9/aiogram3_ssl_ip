@@ -2,7 +2,6 @@
 
 # Set the MySQL credentials from environment variables
 ROOT_PASSWORD=$ROOT_PASSWORD
-MYSQL_ALLOW_EMPTY_PASSWORD=$MYSQL_ALLOW_EMPTY_PASSWORD
 
 mysql -u root <<MYSQL_SCRIPT
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';
