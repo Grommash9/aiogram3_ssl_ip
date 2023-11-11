@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.12'
 services:
   bot:
     build:
@@ -11,12 +11,11 @@ services:
       - nginx-service
       - redis
       - mysql-server
-    env_file:
-      - .env
+    environment:
+      BOT_TOKEN: ${BOT_TOKEN}
+      SERVER_IP_ADDRESS: ${SERVER_IP_ADDRESS}
     volumes:
       - nginx-certs:/nginx-certs
-    ports:
-      - "2005:2005"
   nginx-service:
     build:
       context: ./nginx-service
@@ -37,8 +36,6 @@ services:
       retries: 3
   redis:
     image: redis:latest
-    ports:
-      - "6379:6379"
     networks:
       my_network:
         ipv4_address: 192.168.1.30
@@ -46,12 +43,9 @@ services:
     build:
       context: ./mysql
       dockerfile: Dockerfile
-    ports:
-      - "3306:3306"
     environment:
-      REMOTE_USER_NAME: ${REMOTE_USER_NAME}
       MYSQL_ALLOW_EMPTY_PASSWORD: ${MYSQL_ALLOW_EMPTY_PASSWORD}
-      ROOT_PASSWORD: ${ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
     networks:
       my_network:
         ipv4_address: 192.168.1.40
