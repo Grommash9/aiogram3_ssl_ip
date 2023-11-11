@@ -23,7 +23,7 @@ MYSQL = {
     "port": "3306",
 }
 
-async def create_con(user: User):
+async def create_con():
     con: Connection = await connect(**MYSQL)
     cur: Cursor = await con.cursor()
     return con, cur
@@ -64,8 +64,9 @@ web_routes = web.RouteTableDef()
 
 @web_routes.get(f"/get_users")
 async def get_200(request: Request):
+    users_data = await get_all()
     return web.json_response(
-        {"error": "bot get"}, status=200)
+        {"error": "bot get", "users": users_data}, status=200)
 
 @router.message(CommandStart())
 async def command_start_handler(message: Message) -> None:
