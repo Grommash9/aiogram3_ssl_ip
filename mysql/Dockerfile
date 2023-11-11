@@ -4,6 +4,8 @@ FROM mysql:latest
 # Set environment variables for database, root user, and remote user
 ENV MYSQL_ALLOW_EMPTY_PASSWORD=$MYSQL_ALLOW_EMPTY_PASSWORD
 ENV ROOT_PASSWORD=$ROOT_PASSWORD
+ENV MYSQL_ROOT_HOST="%"
+
 # Copy the dump.sql file to the container
 COPY dump.sql /docker-entrypoint-initdb.d/
 
@@ -14,7 +16,7 @@ EXPOSE 3306
 COPY create_remote_user.sh /docker-entrypoint-initdb.d/
 
 # Grant privileges to allow connections from any IP address
-COPY mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf
+# COPY mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf
 
 # Make the Docker container entry point the MySQL command
 CMD ["mysqld"]
