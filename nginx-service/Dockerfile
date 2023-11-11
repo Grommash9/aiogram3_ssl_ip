@@ -15,7 +15,7 @@ COPY . /home/
 
 RUN touch /etc/nginx/snippets/self-signed.conf
 RUN touch /etc/nginx/snippets/ssl-params.conf
-RUN sed -i "s/SERVER_IP_PLACEHOLDER/$SERVER_IP/g" /home/default.conf
+RUN sed -i "s/SERVER_IP_PLACEHOLDER/$SERVER_IP_ADDRESS/g" /home/default.conf
 
 RUN cat home/self-signed.conf > /etc/nginx/snippets/self-signed.conf
 RUN cat home/ssl-params.conf > /etc/nginx/snippets/ssl-params.conf
