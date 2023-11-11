@@ -1,7 +1,7 @@
 # Use the official Nginx image as the base image
 FROM nginx:1.24
 
-ENV SERVER_IP=$SERVER_IP_ADDRESS
+ENV SERVER_IP_ADDRESS=$SERVER_IP_ADDRESS
 
 RUN apt-get update && apt-get install -y nginx openssl
 
