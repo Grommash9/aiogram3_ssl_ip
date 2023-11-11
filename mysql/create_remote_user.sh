@@ -4,7 +4,8 @@
 ROOT_PASSWORD=$ROOT_PASSWORD
 
 mysql -u root <<MYSQL_SCRIPT
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';
+ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_PASSWORD';
+ALTER USER 'root'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
 CREATE DATABASE IF NOT EXISTS support_bot_database;
 CREATE USER 'rootremote'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
 GRANT ALL PRIVILEGES ON support_bot_database.* TO 'rootremote'@'%';

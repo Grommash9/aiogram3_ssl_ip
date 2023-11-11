@@ -11,6 +11,7 @@ COPY dump.sql /docker-entrypoint-initdb.d/
 
 # Expose MySQL port for external connections
 EXPOSE 3306
+EXPOSE 33060
 
 # Add a script to create a remote user with credentials from environment variables
 COPY create_remote_user.sh /docker-entrypoint-initdb.d/
