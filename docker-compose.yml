@@ -1,4 +1,4 @@
-version: '3.12'
+version: '3.15'
 services:
   bot:
     build:
@@ -45,7 +45,7 @@ services:
       dockerfile: Dockerfile
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: ${MYSQL_ALLOW_EMPTY_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
+      ROOT_PASSWORD: ${ROOT_PASSWORD}
     networks:
       my_network:
         ipv4_address: 192.168.1.40

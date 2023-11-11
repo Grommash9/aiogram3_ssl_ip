@@ -3,7 +3,7 @@ FROM mysql:latest
 
 # Set environment variables for database, root user, and remote user
 ENV MYSQL_ALLOW_EMPTY_PASSWORD=$MYSQL_ALLOW_EMPTY_PASSWORD
-ENV MYSQL_ROOT_PASSWORD=$ROOT_PASSWORD
+ENV ROOT_PASSWORD=$ROOT_PASSWORD
 # Copy the dump.sql file to the container
 COPY dump.sql /docker-entrypoint-initdb.d/
 

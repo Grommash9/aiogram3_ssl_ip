@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set the MySQL credentials from environment variables
-MYSQL_PASSWORD=$ROOT_PASSWORD
+ROOT_PASSWORD=$ROOT_PASSWORD
 MYSQL_ALLOW_EMPTY_PASSWORD=$MYSQL_ALLOW_EMPTY_PASSWORD
 
 mysql -u root <<MYSQL_SCRIPT

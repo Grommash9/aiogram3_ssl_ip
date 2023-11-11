@@ -55,6 +55,7 @@ WEB_SERVER_PORT = 2005
 
 WEBHOOK_SECRET = "my-secret"
 BASE_WEBHOOK_URL = f"https://{getenv('SERVER_IP_ADDRESS')}/tg-bot"
+print("BASE_WEBHOOK_URL", BASE_WEBHOOK_URL)
 
 WEBHOOK_SSL_CERT = "/nginx-certs/nginx-selfsigned.crt"
 WEBHOOK_SSL_PRIV = "/nginx-certs/nginx-selfsigned.key"
