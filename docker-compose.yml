@@ -11,6 +11,8 @@ services:
       - nginx-service
       - redis
       - mysql-server
+    ports:
+      - "2005:2005"
     environment:
       BOT_TOKEN: ${BOT_TOKEN}
       SERVER_IP_ADDRESS: ${SERVER_IP_ADDRESS}
