@@ -46,9 +46,9 @@ services:
     ports:
       - "3306:3306"
       - "33060:33060"
-    networks:
-      my_network:
-        ipv4_address: 192.168.1.40
+    # networks:
+    #   my_network:
+    #     ipv4_address: 192.168.1.40
     volumes:
       - mysql-data:/var/lib/mysql
 

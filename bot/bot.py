@@ -16,7 +16,7 @@ from aiomysql import Connection, Cursor, DictCursor, connect
 from aiogram.types import User
 
 MYSQL = {
-    "host": "mysql-server",
+    "host": "127.0.0.1",
     "user": "root",
     "password": getenv("ROOT_PASSWORD"),
     "db": "support_bot_database",
