@@ -17,7 +17,7 @@ EXPOSE 33060
 COPY create_remote_user.sh /docker-entrypoint-initdb.d/
 
 # Grant privileges to allow connections from any IP address
-# COPY mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf
+COPY mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf
 
 # Make the Docker container entry point the MySQL command
 CMD ["mysqld"]
