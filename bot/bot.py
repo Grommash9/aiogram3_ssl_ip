@@ -1,6 +1,5 @@
-"""
-This example shows how to use webhook with SSL certificate.
-"""
+import os
+import asyncio
 import logging
 import sys
 from os import getenv
@@ -17,7 +16,7 @@ from aiogram.types import User
 
 MYSQL = {
     "host": "127.0.0.1",
-    "user": "root",
+    "user": "rootuser",
     "password": getenv("ROOT_PASSWORD"),
     "db": "support_bot_database",
     "port": 3306,
@@ -47,6 +46,14 @@ async def get_all():
     users_data = await cur.fetchall()
     await con.ensure_closed()
     return users_data
+
+async def run_sql_file(filename: str):
+    con, cur = await create_con()
+    with open(filename, 'r') as sql_file:
+        sql_script = sql_file.read()
+        await cur.execute(sql_script)
+    await con.commit()
+    await con.ensure_closed()
 
 TOKEN = getenv("BOT_TOKEN")
 
@@ -95,6 +102,11 @@ def main() -> None:
     dp = Dispatcher()
     dp.include_router(router)
     dp.startup.register(on_startup)
+
+    sql_file_path = os.path.join(os.path.dirname(__file__), 'dump.sql')
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(run_sql_file(sql_file_path))
+
     bot = Bot(TOKEN, parse_mode=ParseMode.HTML)
     app = web.Application()
     webhook_requests_handler = SimpleRequestHandler(

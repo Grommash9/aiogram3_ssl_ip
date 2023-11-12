@@ -38,17 +38,16 @@ services:
       my_network:
         ipv4_address: 192.168.1.30
   mysql-server:
-    build:
-      context: ./mysql
-      dockerfile: Dockerfile
+    image: mysql:latest
     environment:
-      ROOT_PASSWORD: ${ROOT_PASSWORD}
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: "support_bot_database"
+      MYSQL_USER: "rootuser"
+      MYSQL_PASSWORD: ${ROOT_PASSWORD}
     ports:
       - "3306:3306"
       - "33060:33060"
-    # networks:
-    #   my_network:
-    #     ipv4_address: 192.168.1.40
     volumes:
       - mysql-data:/var/lib/mysql
 
