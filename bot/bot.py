@@ -69,7 +69,7 @@ WEBHOOK_SSL_PRIV = "/nginx-certs/nginx-selfsigned.key"
 router = Router()
 web_routes = web.RouteTableDef()
 
-@web_routes.get(f"/get_users")
+@web_routes.get(f"/tg-bot/get_users")
 async def get_200(request: Request):
     users_data = await get_all()
     return web.json_response(
